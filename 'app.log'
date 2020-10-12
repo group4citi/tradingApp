@@ -1,0 +1,9 @@
+2020-10-12 06:11:21.289  INFO 1500 --- [main] com.rest.trade.FinalHackApplication      : Starting FinalHackApplication on EC2AMAZ-8RI616P with PID 1500 (C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0\target\classes started by Administrator in C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0)
+2020-10-12 06:11:21.292  INFO 1500 --- [main] com.rest.trade.FinalHackApplication      : No active profile set, falling back to default profiles: default
+2020-10-12 06:11:23.374  INFO 1500 --- [main] com.rest.trade.FinalHackApplication      : Started FinalHackApplication in 2.453 seconds (JVM running for 3.297)
+2020-10-12 06:12:09.050  INFO 4704 --- [main] com.rest.trade.FinalHackApplication      : Starting FinalHackApplication on EC2AMAZ-8RI616P with PID 4704 (C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0\target\classes started by Administrator in C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0)
+2020-10-12 06:12:09.071  INFO 4704 --- [main] com.rest.trade.FinalHackApplication      : No active profile set, falling back to default profiles: default
+2020-10-12 06:12:10.910  INFO 4704 --- [main] com.rest.trade.FinalHackApplication      : Started FinalHackApplication in 2.258 seconds (JVM running for 3.243)
+2020-10-12 06:13:15.369  INFO 5868 --- [main] com.rest.trade.FinalHackApplication      : Starting FinalHackApplication on EC2AMAZ-8RI616P with PID 5868 (C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0\target\classes started by Administrator in C:\Users\Administrator\Desktop\Javap\hack-sri-v1.0)
+2020-10-12 06:13:15.378  INFO 5868 --- [main] com.rest.trade.FinalHackApplication      : No active profile set, falling back to default profiles: default
+2020-10-12 06:13:17.395  INFO 5868 --- [main] com.rest.trade.FinalHackApplication      : Started FinalHackApplication in 2.421 seconds (JVM running for 3.236)

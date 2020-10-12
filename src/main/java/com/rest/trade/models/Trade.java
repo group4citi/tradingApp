@@ -10,22 +10,16 @@ public class Trade {
 	@Id
 	private String tradeID;
 	private Date date;
-	private String state;
-	private String type;
+	private TradeState state;
+	private TradeType type;
 	private String ticker;
 	private int qty;
 	private double price;
 	private double totalAmt;
-	
-	public Trade(String tradeID, String state, String type, String ticker, int qty, double price) {
-		super();
-		this.tradeID = tradeID;
-		this.date = new Date(); 
-		this.state = state;
-		this.type = type;
-		this.ticker = ticker;
-		this.qty = qty;
-		this.price = price;
+
+	public Trade() {
+		this.date = new Date(System.currentTimeMillis());
+		this.state = TradeState.CREATED;
 	}
 
 	public String getTradeID() {
@@ -44,19 +38,19 @@ public class Trade {
 		this.date = date;
 	}
 
-	public String getState() {
+	public TradeState getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(TradeState state) {
 		this.state = state;
 	}
 
-	public String getType() {
+	public TradeType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TradeType type) {
 		this.type = type;
 	}
 

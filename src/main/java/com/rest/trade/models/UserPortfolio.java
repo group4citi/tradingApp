@@ -6,8 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user_portfolio")
 public class UserPortfolio {
 	@Id
-	private String email;
 	private String tradeID;
+	private String email;
+	
+	public UserPortfolio() {
+	}
 	public String getEmail() {
 		return email;
 	}
