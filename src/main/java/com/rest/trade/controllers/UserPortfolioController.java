@@ -7,16 +7,19 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.rest.trade.models.Trade;
-import com.rest.trade.models.TradeState;
 import com.rest.trade.models.TradeType;
 import com.rest.trade.models.UserPortfolio;
 import com.rest.trade.repositories.TradeRepo;
@@ -36,26 +39,31 @@ public class UserPortfolioController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserPortfolioController.class);
 	
-	@RequestMapping(value="/display_user_portfolio", method=RequestMethod.GET)
-	public List<Trade> displayTrades(@RequestBody String email) {
-		List<Trade> tradesToDisplay = new ArrayList<Trade>();
-		List<UserPortfolio> userPortfolio = userPortfolioRepo.findByEmail(email);
-		List<String> tradeIDs = new ArrayList<String>();
-		for(int i=0;  i!=userPortfolio.size(); i++) {
-			tradeIDs.add(userPortfolio.get(i).getTradeID());
-		}
-		
-		if(tradeIDs.size() != 0) {
-			for(int i=0; i!=tradeIDs.size(); i++) {
-				Trade trades = tradeRepo.findByTradeID(tradeIDs.get(i));
-				tradesToDisplay.add(trades);
-			}
-			LOG.debug("User portfolio retrieved");
-			return tradesToDisplay;
-		} else {
-			LOG.debug("User has made no transactions to list");
-			return tradesToDisplay;
-		}		
+	@RequestMapping(value="/display_user_portfolio", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String displayTrades(@RequestBody TextNode email) {
+		return email.asText();
+//		List<Trade> tradesToDisplay = new ArrayList<Trade>();
+//		List<UserPortfolio> userPortfolio = new ArrayList<UserPortfolio>();
+//	    userPortfolio = userPortfolioRepo.findAll();
+//		List<String> tradeIDs = new ArrayList<String>();
+//		for(int i=1;  i<userPortfolio.size(); i++) {
+//			System.out.println(userPortfolio.get(i).getEmail());
+//			if(userPortfolio.get(i).getEmail().equals(email)) {
+//				tradeIDs.add(userPortfolio.get(i).getTradeID());
+//			}
+//		}
+//		System.out.println(tradeIDs.size());
+//		if(tradeIDs.size() != 0) {
+//			for(int i=0; i!=tradeIDs.size(); i++) {
+//				Trade trades = tradeRepo.findByTradeID(tradeIDs.get(i));
+//				tradesToDisplay.add(trades);
+//			}
+//			LOG.debug("User portfolio retrieved");
+//			return tradesToDisplay;
+//		} else {
+//			LOG.debug("User has made no transactions to list");
+//			return tradesToDisplay;
+//		}		
 	}
 	
 	@RequestMapping(value="/make_trade", method=RequestMethod.POST)
