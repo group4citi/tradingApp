@@ -3,7 +3,8 @@ package com.rest.trade.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "user_credentials")
+@Document(collection = "user_details")
+//@Document(collection = "user_credentials")
 public class UserCredentials {
 	@Id
 	private String email;
