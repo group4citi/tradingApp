@@ -28,11 +28,15 @@ public class LoginVerfication {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(LoginVerfication.class);
 	
-	@RequestMapping(value="/signup", method=RequestMethod.POST)
-	public UserCredentials signUp(@RequestBody UserCredentials userCredentials) {
+	@RequestMapping(value="/signup", method=RequestMethod.GET)
+	public String signUp(@RequestParam String email, @RequestParam String password) {
+//	public UserCredentials signUp(@RequestBody UserCredentials userCredentials) {
+		UserCredentials userCredentials = new UserCredentials();
+		userCredentials.setEmail(email);
+		userCredentials.setPassword(password);
 		userCredentialsRepo.save(userCredentials);
 		LOG.debug("User signed up successfully");
-		return userCredentials;
+		return "Registered";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)

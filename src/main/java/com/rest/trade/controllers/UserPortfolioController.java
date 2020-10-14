@@ -3,6 +3,7 @@ package com.rest.trade.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +31,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class UserPortfolioController {
 	@Autowired
@@ -40,41 +43,45 @@ public class UserPortfolioController {
 	private static final Logger LOG = LoggerFactory.getLogger(UserPortfolioController.class);
 	
 	@RequestMapping(value="/display_user_portfolio", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String displayTrades(@RequestBody TextNode email) {
-		return email.asText();
-//		List<Trade> tradesToDisplay = new ArrayList<Trade>();
-//		List<UserPortfolio> userPortfolio = new ArrayList<UserPortfolio>();
-//	    userPortfolio = userPortfolioRepo.findAll();
-//		List<String> tradeIDs = new ArrayList<String>();
-//		for(int i=1;  i<userPortfolio.size(); i++) {
-//			System.out.println(userPortfolio.get(i).getEmail());
-//			if(userPortfolio.get(i).getEmail().equals(email)) {
-//				tradeIDs.add(userPortfolio.get(i).getTradeID());
-//			}
-//		}
-//		System.out.println(tradeIDs.size());
-//		if(tradeIDs.size() != 0) {
-//			for(int i=0; i!=tradeIDs.size(); i++) {
-//				Trade trades = tradeRepo.findByTradeID(tradeIDs.get(i));
-//				tradesToDisplay.add(trades);
-//			}
-//			LOG.debug("User portfolio retrieved");
-//			return tradesToDisplay;
-//		} else {
-//			LOG.debug("User has made no transactions to list");
-//			return tradesToDisplay;
-//		}		
+	public List<Trade> displayTrades(@RequestParam String email) {
+	
+		List<Trade> tradesToDisplay = new ArrayList<Trade>();
+		List<UserPortfolio> userPortfolio = new ArrayList<UserPortfolio>();
+	    userPortfolio = userPortfolioRepo.findAll();
+		List<String> tradeIDs = new ArrayList<String>();
+		for(int i=1;  i<userPortfolio.size(); i++) {
+			if(userPortfolio.get(i).getEmail().equals(email)) {
+				tradeIDs.add(userPortfolio.get(i).getTradeID());
+			}
+		}
+		
+		if(tradeIDs.size() != 0) {
+			for(int i=0; i!=tradeIDs.size(); i++) {
+				Trade trades = tradeRepo.findByTradeID(tradeIDs.get(i));
+				tradesToDisplay.add(trades);
+			}
+			LOG.debug("User portfolio retrieved");
+			return tradesToDisplay;
+		} else {
+			LOG.debug("User has made no transactions to list");
+			return tradesToDisplay;
+		}		
 	}
 	
-	@RequestMapping(value="/make_trade", method=RequestMethod.POST)
-	public Trade makeTrade(@RequestBody ObjectNode objectNode) {
-//	public Trade makeTrade(@RequestBody String tradeID, @RequestBody String ticker, 
-//			@RequestBody int qty, @RequestBody String type, @RequestBody String email) {
+	@RequestMapping(value="/make_trade", method=RequestMethod.GET)
+//	public Trade makeTrade(@RequestBody ObjectNode objectNode) {
+	public String makeTrade(@RequestParam String ticker, 
+			@RequestParam String quantity, @RequestParam String type, @RequestParam String email) {
+		Random r = new Random();
+		int random = r.nextInt(100);
+		String tradeID = "T"+ random;
+		int qty = Integer.parseInt(quantity);
+		/*
 		String tradeID = objectNode.get("tradeID").asText();
 		String ticker = objectNode.get("ticker").asText();
 		int qty = objectNode.get("qty").asInt();
 		String type = objectNode.get("type").asText();
-		String email = objectNode.get("email").asText();
+		String email = objectNode.get("email").asText(); */
 		
 		Stock stock = null;
 		Trade trade = new Trade();
@@ -90,11 +97,12 @@ public class UserPortfolioController {
 			double price = stock.getQuote().getPrice().doubleValue();
 			trade.setPrice(price);
 			trade.setTotalAmt(price * trade.getQty());
-			tradeRepo.save(trade);
+		
 			
 			if(type.equalsIgnoreCase("buy"))
 				trade.setType(TradeType.BUY);
 			else trade.setType(TradeType.SELL);
+			tradeRepo.save(trade);
 			
 			UserPortfolio userPortfolio = new UserPortfolio();
 			userPortfolio.setEmail(email);
@@ -102,10 +110,10 @@ public class UserPortfolioController {
 			userPortfolioRepo.save(userPortfolio);
 			
 			LOG.debug(trade.getTicker() + " transaction details saved");
-			return trade;
+			return "Trade Success";
 		} else {
 			LOG.debug("Required transaction details are not entered");
-			return trade;
+			return "Trade failed";
 		}		
 	}
 }
