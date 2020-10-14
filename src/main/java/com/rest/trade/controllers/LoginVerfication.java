@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.trade.models.UserCredentials;
@@ -35,9 +36,10 @@ public class LoginVerfication {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String verifyCredentials(@RequestBody Map<String, String> data) {
-		String email = data.get("email");
-		String password = data.get("password");
+//	public String verifyCredentials(@RequestBody Map<String, String> data) {
+	public String verifyCredentials(@RequestParam String email, @RequestParam String password) {
+		//String email = data.get("email");
+		//String password = data.get("password");
 
 		UserCredentials userCredentials = userCredentialsRepo.findByEmail(email);
 		
