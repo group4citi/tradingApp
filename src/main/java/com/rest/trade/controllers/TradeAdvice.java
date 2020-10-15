@@ -25,7 +25,7 @@ import com.rest.trade.repositories.UserPortfolioRepo;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://citichennailinux10.conygre.com:8081")
 @RequestMapping("/api")
 public class TradeAdvice {
 	

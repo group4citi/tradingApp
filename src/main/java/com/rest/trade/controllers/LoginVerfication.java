@@ -20,7 +20,7 @@ import com.rest.trade.models.UserCredentials;
 import com.rest.trade.repositories.UserCredentialsRepo;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://citichennailinux10.conygre.com:8081")
 @RequestMapping("/api")
 public class LoginVerfication {
 	@Autowired 

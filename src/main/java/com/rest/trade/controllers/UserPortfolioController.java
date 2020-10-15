@@ -31,7 +31,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://citichennailinux10.conygre.com:8081")
 @RequestMapping("/api")
 public class UserPortfolioController {
 	@Autowired
